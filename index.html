@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Screensaver</title>
+  <link rel="preload" href="manifest.json" as="fetch" crossorigin>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    html, body { height:100%; margin:0; background:#000; }
+    #stage { position:fixed; inset:0; display:grid; place-items:center; }
+    video#player { width:100vw; height:100vh; object-fit:contain; background:#000; }
+    .fade { transition: opacity 0.5s ease; }
+    #badge {
+      position:fixed; left:16px; bottom:14px; padding:6px 10px; font:14px/1.2 system-ui, sans-serif;
+      color:#ddd; background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.12); border-radius:8px;
+      max-width:60vw; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;
+      backdrop-filter:saturate(1.2) blur(2px);
+    }
+    #overlay { position:fixed; inset:12px; color:#eee; font:13px system-ui, sans-serif; display:none; }
+    #overlay.k { display:block; }
+    #overlay pre { background:rgba(0,0,0,.4); padding:8px 10px; border-radius:8px; overflow:auto; }
+    .hidden-cursor { cursor:none; }
+  </style>
+</head>
+<body>
+<div id="stage">
+  <video id="player" class="fade" autoplay muted loop playsinline></video>
+</div>
+<div id="badge" title="Video filename"></div>
+<div id="overlay">
+  <pre id="diag"></pre>
+  <p>Shortcuts: <strong>F</strong>ullscreen • <strong>N</strong>ext • <strong>Shift+A</strong> Admin overlay</p>
+</div>
+<script src="app.js" defer></script>
+</body>
+</html>
