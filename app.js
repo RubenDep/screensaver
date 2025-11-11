@@ -133,6 +133,7 @@ async function play(item) {
   state.current = item;
   console.log('[APP] Playing:', item.url);
   v.src = item.url;
+  v.loop = false;
   updateBadge(item.title || filenameFromUrl(item.url));
   try { await v.play(); } catch (e) { console.warn('[APP] Autoplay blocked?', e); }
 }
@@ -154,6 +155,19 @@ function wireShortcuts() {
     } else if (e.key.toLowerCase() === 'a' && e.shiftKey) {
       toggleOverlay();
     }
+  });
+}
+
+const v = document.getElementById(PLAYER_ID);
+if (v) {
+  v.loop = false; // make sure
+  v.addEventListener('ended', () => {
+    console.log('[APP] ended → rotate()');
+    rotate();
+  });
+  v.addEventListener('error', (e) => {
+    console.warn('[APP] video error → rotate()', e);
+    rotate();
   });
 }
 
